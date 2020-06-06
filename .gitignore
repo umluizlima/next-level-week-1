@@ -105,3 +105,4 @@ dist
 
 # SQLite3 database files
 *.sqlite
+*.sqlite-journal
