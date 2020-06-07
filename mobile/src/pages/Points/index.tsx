@@ -1,15 +1,127 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import Constants from 'expo-constants';
+import { Feather as Icon } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { SvgUri } from 'react-native-svg';
 
 const Points = () => {
-  return <View />
+  const navigation = useNavigation();
+
+  const handleNavigateBack = () => {
+    navigation.goBack();
+  };
+
+  const handleNavigateToDetail = () => {
+    navigation.navigate('Detail');
+  };
+
+  return (
+    <>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={handleNavigateBack}>
+          <Icon name="arrow-left" size={20} color="#34cb79" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Olá!</Text>
+        <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: -23.5535016,
+              longitude: -46.6222736,
+              latitudeDelta: 0.014,
+              longitudeDelta: 0.014,
+            }}
+          >
+            <Marker
+              style={styles.mapMarker}
+              coordinate={{
+                latitude: -23.5535016,
+                longitude: -46.6222736,
+              }}
+              onPress={handleNavigateToDetail}
+            >
+              <View style={styles.mapMarkerContainer}>
+                <Image
+                  style={styles.mapMarkerImage}
+                  source={{ uri: 'https://images.unsplash.com/photo-1557224651-e96a58962468?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'}}
+                />
+                <Text style={styles.mapMarkerTitle}>Mercado</Text>
+              </View>
+            </Marker>
+          </MapView>
+        </View>
+      </View>
+      <View style={styles.itemsContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingHorizontal: 20
+          }}
+        >
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {}}
+          >
+            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
+            <Text style={styles.itemTitle}>Óleo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {}}
+          >
+            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
+            <Text style={styles.itemTitle}>Óleo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {}}
+          >
+            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
+            <Text style={styles.itemTitle}>Óleo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {}}
+          >
+            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
+            <Text style={styles.itemTitle}>Óleo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {}}
+          >
+            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
+            <Text style={styles.itemTitle}>Óleo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {}}
+          >
+            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
+            <Text style={styles.itemTitle}>Óleo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {}}
+          >
+            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
+            <Text style={styles.itemTitle}>Óleo</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 32,
-    // paddingTop: 20 + Constants.statusBarHeight,
+    paddingTop: 20 + Constants.statusBarHeight,
   },
 
   title: {
