@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Constants from 'expo-constants';
@@ -6,8 +6,24 @@ import { Feather as Icon } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SvgUri } from 'react-native-svg';
 
+import api from '../../services/api';
+
+interface Item {
+  id: number,
+  title: string;
+  image_url: string;
+}
+
 const Points = () => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    api.get('items').then(response => {
+      setItems(response.data);
+    });
+  }, []);
 
   const handleNavigateBack = () => {
     navigation.goBack();
@@ -15,6 +31,15 @@ const Points = () => {
 
   const handleNavigateToDetail = () => {
     navigation.navigate('Detail');
+  };
+
+  const handleSelectItem = (id: number) => {
+    const alreadySelected = selectedItems.findIndex(item => item === id);
+    if (alreadySelected >= 0) {
+      setSelectedItems(selectedItems.filter(item => item !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
   };
 
   return (
@@ -62,55 +87,20 @@ const Points = () => {
             paddingHorizontal: 20
           }}
         >
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {}}
-          >
-            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
-            <Text style={styles.itemTitle}>Óleo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {}}
-          >
-            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
-            <Text style={styles.itemTitle}>Óleo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {}}
-          >
-            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
-            <Text style={styles.itemTitle}>Óleo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {}}
-          >
-            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
-            <Text style={styles.itemTitle}>Óleo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {}}
-          >
-            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
-            <Text style={styles.itemTitle}>Óleo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {}}
-          >
-            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
-            <Text style={styles.itemTitle}>Óleo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.item}
-            onPress={() => {}}
-          >
-            <SvgUri width={42} height={42} uri="http://192.168.15.19:3333/uploads/oleo.svg" />
-            <Text style={styles.itemTitle}>Óleo</Text>
-          </TouchableOpacity>
+          {items.map(item => (
+            <TouchableOpacity
+              key={String(item.id)}
+              style={[
+                styles.item,
+                selectedItems.includes(item.id) ? styles.selectedItem : {},
+              ]}
+              activeOpacity={0.6}
+              onPress={() => handleSelectItem(item.id)}
+            >
+              <SvgUri width={42} height={42} uri={item.image_url} />
+              <Text style={styles.itemTitle}>{item.title}</Text>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       </View>
     </>
