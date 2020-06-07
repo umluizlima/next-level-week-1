@@ -106,3 +106,19 @@ dist
 # SQLite3 database files
 *.sqlite
 *.sqlite-journal
+
+# Expo .gitignore
+node_modules/**/*
+*/.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
+
+# macOS
+.DS_Store

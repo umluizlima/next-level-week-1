@@ -5,14 +5,13 @@ import knex from '../database/connection';
 class PointsController {
   async list(request: Request, response: Response) {
     const { city, uf, items } = request.query;
-    
-    const parsedItems = String(items)
-      .split(',')
-      .map(item => Number(item.trim()));
 
     let query = knex('points')
       .join('point_items', 'points.id', '=', 'point_items.point_id')
-    if (parsedItems.length > 0) {
+    if (items) {
+      const parsedItems = String(items)
+      .split(',')
+      .map(item => Number(item.trim()));
       query = query.whereIn('point_items.item_id', parsedItems);
     }
     if (city) {
