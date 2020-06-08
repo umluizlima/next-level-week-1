@@ -5,6 +5,7 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 
 import logo from '../../assets/logo.svg';
+import DropZone from '../../components/Dropzone';
 import api from '../../services/api';
 import ibge from '../../services/ibge';
 import './styles.css';
@@ -126,6 +127,7 @@ const CreatePoint = () => {
       </header>
       <form onSubmit={handleSubmit}>
         <h1>Cadastro do ponto de coleta</h1>
+        <DropZone />
         <fieldset>
           <legend>
             <h2>Dados</h2>
